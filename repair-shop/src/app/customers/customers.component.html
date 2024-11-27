@@ -1,0 +1,30 @@
+<h2>Customers</h2>
+<div>
+  <input [(ngModel)]="newCustomer.name" placeholder="Name" />
+  <input [(ngModel)]="newCustomer.email" placeholder="Email" />
+  <input [(ngModel)]="newCustomer.phone" placeholder="Phone" />
+
+  <div>
+    <label for="file-upload" class="custom-file-upload">Upload Image</label>
+    <input id="file-upload" type="file" (change)="onFileSelected($event)" />
+  </div>
+  <div *ngIf="selectedImage" [@fadeInOut]>
+    <img [src]="selectedImage" alt="Preview" class="image-preview" />
+  </div>
+
+  <button (click)="addOrUpdateCustomer()">
+    {{ isEditMode ? 'Update Customer' : 'Add Customer' }}
+  </button>
+  <button *ngIf="isEditMode" (click)="resetForm()">Cancel</button>
+</div>
+
+<ul>
+  <li *ngFor="let customer of customers" [@fadeInOut]>
+    <div>
+      <img *ngIf="customer.image" [src]="'/uploads/' + customer.image" alt="Customer" class="customer-image" />
+      {{ customer.name }} - {{ customer.email }} - {{ customer.phone }}
+    </div>
+    <button (click)="editCustomer(customer)">Edit</button>
+    <button (click)="deleteCustomer(customer.id)">Delete</button>
+  </li>
+</ul>
